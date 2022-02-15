@@ -19,8 +19,8 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
-@CapacitorPlugin(name = "Echo")
-public class EchoPlugin extends Plugin {
+@CapacitorPlugin(name = "Bridge")
+public class BridgePlugin extends Plugin {
   private Document doc;
   private JSONObject json;
   private PluginCall publicCall;
@@ -29,16 +29,24 @@ public class EchoPlugin extends Plugin {
   @PluginMethod()
   public void echo(PluginCall call) {
     String value = call.getString("value");
-
+    Log.d("MSG: echo =", " " + call.getData().toString());
     JSObject ret = new JSObject();
     ret.put("value", value);
     call.resolve(ret);
   }
 
   @PluginMethod()
-  public  void  getHomeData(PluginCall call) {
-    AsyncTask<String, Void, Void> metadata = new HomeArticlesMetadata().execute("https://www.hommenouveau.fr/");
+  public  void  getHomeMetadata(PluginCall call) {
     publicCall = call;
+    AsyncTask<String, Void, Void> metadata = new HomeArticlesMetadata().execute("https://www.hommenouveau.fr/");
+  }
+
+  @PluginMethod()
+  public  void  getHomeData(PluginCall call) {
+    String url = call.getString("url");
+    Log.d("MSG: URL =", "url=" + call.getData().toString());
+    publicCall = call;
+    AsyncTask<String, Void, Void> articleData = new ArticleData().execute(url);
   }
 
   private class HomeArticlesMetadata extends AsyncTask<String, Void, Void> {
@@ -98,6 +106,42 @@ public class EchoPlugin extends Plugin {
         JSObject ret = new JSObject();
         ret.put("primaryArticles", json.get("primaryArticles"));
         ret.put("secondaryArticles", json.get("secondaryArticles"));
+
+        publicCall.resolve(ret);
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  private class ArticleData extends AsyncTask<String, Void, Void> {
+
+    @Override
+    protected Void doInBackground(String... params) {
+      try {
+        doc = Jsoup.connect(params[0]).get();
+
+        json = new JSONObject();
+        JSONArray primaryArticles = new JSONArray();
+        JSONArray secondaryArticles = new JSONArray();
+
+        // Get swiper articles
+        Elements el = doc.select("#contenu #texte");
+        JSONObject article = new JSONObject();
+        article.put("title", el.select("h1").text());
+        article.put("content", el.select(".fck").html());
+      } catch (IOException | JSONException e) {
+        System.out.println(e);
+      }
+
+      return null;
+    }
+
+    protected void onPostExecute(Void result) {
+      try {
+        JSObject ret = new JSObject();
+        ret.put("title", json.get("title"));
+        ret.put("content", json.get("content"));
 
         publicCall.resolve(ret);
       } catch (JSONException e) {

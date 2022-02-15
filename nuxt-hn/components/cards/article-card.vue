@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="{ path: '/article/' + String(id), query: { url: encodeURI(url) } }" class="m-8 max-w-md rounded-lg shadow-lg overflow-hidden bg-white">
+  <nuxt-link @click.prevent="setArticleURL(url); document.href='/article'" class="m-8 max-w-md rounded-lg shadow-lg overflow-hidden bg-white">
     <div class="relative h-56">
       <img :src="img" class="h-full w-full object-cover rounded-b-lg">
       <div class="absolute inset-x-2 bottom-2 p-2 text-xl text-white font-bold text-shadow bg-black/50 rounded-lg">{{ title }}</div>
@@ -17,6 +17,13 @@ export default {
     img: String,
     title: String,
     description: String
+  },
+  methods: {
+    setArticleURL (url) {
+      this.$store.dispatch('setArticleURL', url).then(() => {
+        document.location.href = '/article'
+      })
+    }
   }
 }
 </script>

@@ -28,7 +28,7 @@
 
 <script>
 import articleCard from '~/components/cards/article-card.vue'
-import Echo from '~/plugins/capacitor'
+import Bridge from '~/plugins/capacitor'
 
 export default {
   components: { articleCard },
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     async fetchArticles () {
-      const data = await Echo.getHomeData()
+      const data = await Bridge.getHomeMetadata()
       this.articles = data
     }
   },

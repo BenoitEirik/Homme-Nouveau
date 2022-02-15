@@ -1,5 +1,5 @@
 import { registerPlugin } from '@capacitor/core';
 
-const Echo = registerPlugin('Echo');
+const Bridge = registerPlugin('Bridge');
 
-export default Echo;
+export default Bridge;
