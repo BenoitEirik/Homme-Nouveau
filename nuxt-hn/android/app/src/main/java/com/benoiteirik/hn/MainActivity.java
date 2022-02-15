@@ -1,4 +1,4 @@
-package com.hn.benoiteirik;
+package com.benoiteirik.hn;
 
 import com.getcapacitor.BridgeActivity;
 

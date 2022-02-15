@@ -1,9 +1,9 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.hn.benoiteirik',
-  appName: "L'Homme Nouveau",
-  webDir: 'dist',
+  appId: 'com.benoiteirik.hn',
+  appName: "L'Homme-Nouveau",
+  webDir: 'www',
   bundledWebRuntime: false
 };
 

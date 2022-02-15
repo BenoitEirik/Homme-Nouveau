@@ -2,7 +2,7 @@ export default {
   // SPA (need for capacitor.js)
   // https://serversideup.net/using-nuxtjs-to-build-an-ios-and-android-app/
   ssr: false,
-  target: 'server',
+  target: 'static',
 
   // backend
   serverMiddleware: [
@@ -59,6 +59,5 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    publicPath: '/nuxt/'
   }
 }
