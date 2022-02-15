@@ -28,6 +28,8 @@
 
 <script>
 import articleCard from '~/components/cards/article-card.vue'
+import Echo from '~/plugins/capacitor'
+
 export default {
   components: { articleCard },
   data () {
@@ -37,11 +39,8 @@ export default {
   },
   methods: {
     async fetchArticles () {
-      const data = await this.$axios.$get('/api/home')
-      this.articles = {
-        primaryArticles: data.primaryArticles,
-        secondaryArticles: data.secondaryArticles
-      }
+      const data = await Echo.getHomeData()
+      this.articles = data
     }
   },
   mounted () {

@@ -1,0 +1,6 @@
+{
+	"appId": "com.benoiteirik.hn",
+	"appName": "L'Homme-Nouveau",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}
