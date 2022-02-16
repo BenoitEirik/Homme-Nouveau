@@ -20,17 +20,10 @@ export default {
       article: {}
     }
   },
-  methods: {
-    async fetchArticle () {
-      const searchParams = new URLSearchParams(window.location.search)
-      const decodedURL = decodeURI(searchParams.get('url'))
-      this.article = await Bridge.getHomeData({ url: decodedURL })
-      console.log(this.article)
-      this.loaded = true
-    }
-  },
-  mounted () {
-    this.fetchArticle()
+  async fetch () {
+    const searchParams = new URLSearchParams(window.location.search)
+    this.article = await Bridge.getHomeData({ url: decodeURI(searchParams.get('url')) })
+    this.loaded = true
   }
 }
 </script>

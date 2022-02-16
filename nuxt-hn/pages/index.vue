@@ -38,14 +38,9 @@ export default {
       articles: Object
     }
   },
-  methods: {
-    async fetchArticles () {
-      this.articles = await Bridge.getHomeMetadata()
-      this.loaded = true
-    }
-  },
-  mounted () {
-    this.fetchArticles()
+  async fetch () {
+    this.articles = await Bridge.getHomeMetadata()
+    this.loaded = true
   }
 }
 </script>
