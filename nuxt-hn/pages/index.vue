@@ -1,7 +1,7 @@
 <template>
   <main style="flex:2" class="overflow-y-auto">
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 min-h-full  flex justify-center items-center">
-      <div v-if="articles !== []" class="w-full h-full flex justify-center flex-wrap">
+      <div v-if="loaded" class="w-full h-full flex justify-center flex-wrap">
         <article-card
           v-for="article in articles.primaryArticles"
           :key="'p' + String(article.id)"
@@ -34,13 +34,14 @@ export default {
   components: { articleCard },
   data () {
     return {
+      loaded: false,
       articles: Object
     }
   },
   methods: {
     async fetchArticles () {
-      const data = await Bridge.getHomeMetadata()
-      this.articles = data
+      this.articles = await Bridge.getHomeMetadata()
+      this.loaded = true
     }
   },
   mounted () {

@@ -1,0 +1,50 @@
+<template>
+  <main style="flex: 2" class="overflow-y-auto">
+    <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8 min-h-full flex justify-center items-center">
+      <div v-if="loaded" class="p-8 w-full h-full rounded-2xl shadow-lg">
+        <div v-text="article.title" class="mb-8 text-3xl font-bold text-red-700 underline" />
+        <div v-html="article.content" class="leading-relaxed text-lg espace-btn-el" />
+      </div>
+      <img v-else src="@/assets/loader/rolling.gif">
+    </div>
+  </main>
+</template>
+
+<script>
+import Bridge from '~/plugins/capacitor'
+
+export default {
+  data () {
+    return {
+      loaded: false,
+      article: {}
+    }
+  },
+  methods: {
+    async fetchArticle () {
+      const searchParams = new URLSearchParams(window.location.search)
+      const decodedURL = decodeURI(searchParams.get('url'))
+      this.article = await Bridge.getHomeData({ url: decodedURL })
+      console.log(this.article)
+      this.loaded = true
+    }
+  },
+  mounted () {
+    this.fetchArticle()
+  }
+}
+</script>
+
+<style scoped>
+.espace-btn-el >>> * {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.espace-btn-el >>> .publication {
+  font-style: italic;
+}
+.espace-btn-el >>> img,  .espace-btn-el >>> iframe{
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

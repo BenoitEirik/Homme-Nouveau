@@ -1,0 +1,4 @@
+# Ignore android project detection for the build
+android
+.eslintrc.js
+capacitor.config.ts

@@ -4,6 +4,12 @@ export default {
   ssr: false,
   target: 'static',
 
+  // For live-reload debug with Capacitor.js
+  server: {
+    host: '0.0.0.0',
+    port: 3000
+  },
+
   // backend
   serverMiddleware: [
     { path: '/api/home', handler: '@/api/home.js' },

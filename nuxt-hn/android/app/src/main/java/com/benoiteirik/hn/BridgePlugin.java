@@ -44,7 +44,6 @@ public class BridgePlugin extends Plugin {
   @PluginMethod()
   public  void  getHomeData(PluginCall call) {
     String url = call.getString("url");
-    Log.d("MSG: URL =", "url=" + call.getData().toString());
     publicCall = call;
     AsyncTask<String, Void, Void> articleData = new ArticleData().execute(url);
   }
@@ -122,14 +121,13 @@ public class BridgePlugin extends Plugin {
         doc = Jsoup.connect(params[0]).get();
 
         json = new JSONObject();
-        JSONArray primaryArticles = new JSONArray();
-        JSONArray secondaryArticles = new JSONArray();
 
         // Get swiper articles
         Elements el = doc.select("#contenu #texte");
         JSONObject article = new JSONObject();
-        article.put("title", el.select("h1").text());
-        article.put("content", el.select(".fck").html());
+        json.put("title", el.select("h1").text());
+        json.put("content", el.select(".fck").html());
+
       } catch (IOException | JSONException e) {
         System.out.println(e);
       }

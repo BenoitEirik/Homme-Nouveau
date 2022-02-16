@@ -4,7 +4,12 @@ const config: CapacitorConfig = {
   appId: 'com.benoiteirik.hn',
   appName: "L'Homme-Nouveau",
   webDir: 'dist',
-  bundledWebRuntime: false
+  bundledWebRuntime: false,
+  server: {
+    url: 'http://192.168.56.1:3000/',
+    cleartext: true,
+    androidScheme: 'http'
+  }
 };
 
 export default config;
