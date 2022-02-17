@@ -5,5 +5,18 @@
 	"bundledWebRuntime": false,
 	"android": {
 		"path": "../android"
+	},
+	"plugins": {
+		"SplashScreen": {
+			"launchAutoHide": false,
+			"showSpinner": true,
+			"androidSpinnerStyle": "small",
+			"iosSpinnerStyle": "small",
+			"spinnerColor": "#ffffff",
+			"backgroundColor": "#21252dff",
+			"splashFullScreen": true,
+			"androidScaleType": "CENTER_CROP",
+			"splashImmersive": false
+		}
 	}
 }

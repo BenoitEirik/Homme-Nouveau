@@ -1,1 +1,0 @@
-Folder to generate icon for mobile app.
