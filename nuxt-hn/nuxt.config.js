@@ -47,7 +47,8 @@ export default {
     dirs: [
       '@/components',
       '@/components/layouts',
-      '@/components/cards'
+      '@/components/cards',
+      '@/components/buttons'
     ]
   },
 

@@ -21,17 +21,18 @@
           :description="article.description"
         />
       </div>
-      <img v-else src="@/assets/loader/rolling.gif">
+      <svg-loader v-else color="#b91c1c" />
     </div>
   </main>
 </template>
 
 <script>
 import articleCard from '~/components/cards/article-card.vue'
+import SvgLoader from '~/components/svg-loader.vue'
 import Bridge from '~/plugins/capacitor'
 
 export default {
-  components: { articleCard },
+  components: { articleCard, SvgLoader },
   data () {
     return {
       loaded: false,
@@ -41,6 +42,9 @@ export default {
   async fetch () {
     this.articles = await Bridge.getHomeMetadata()
     this.loaded = true
+  },
+  mounted () {
+    this.$nuxt.$emit('back-icon', false)
   }
 }
 </script>
