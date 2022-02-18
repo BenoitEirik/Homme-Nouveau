@@ -1,6 +1,7 @@
 <template>
   <main style="flex:2" class="overflow-y-auto">
-    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 min-h-full  flex justify-center items-center">
+    <div class="max-w-7xl mx-auto min-h-full flex flex-col justify-center items-center">
+      <categories />
       <div v-if="loaded" class="w-full h-full flex justify-center flex-wrap">
         <article-card
           v-for="article in articles.primaryArticles"
@@ -28,11 +29,12 @@
 
 <script>
 import articleCard from '~/components/cards/article-card.vue'
+import Categories from '~/components/categories.vue'
 import SvgLoader from '~/components/svg-loader.vue'
 import Bridge from '~/plugins/capacitor'
 
 export default {
-  components: { articleCard, SvgLoader },
+  components: { articleCard, SvgLoader, Categories },
   data () {
     return {
       loaded: false,

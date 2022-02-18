@@ -1,5 +1,5 @@
 <template>
-  <button class="w-14 h-12">
+  <button class="w-16 h-12">
     <nuxt-link to="/">
       <svg
         class="m-auto"

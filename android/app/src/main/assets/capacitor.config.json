@@ -6,17 +6,9 @@
 	"android": {
 		"path": "../android"
 	},
-	"plugins": {
-		"SplashScreen": {
-			"launchAutoHide": false,
-			"showSpinner": true,
-			"androidSpinnerStyle": "small",
-			"iosSpinnerStyle": "small",
-			"spinnerColor": "#ffffff",
-			"backgroundColor": "#21252dff",
-			"splashFullScreen": true,
-			"androidScaleType": "CENTER_CROP",
-			"splashImmersive": false
-		}
+	"server": {
+		"url": "http://192.168.56.1:3000/",
+		"cleartext": true,
+		"androidScheme": "http"
 	}
 }

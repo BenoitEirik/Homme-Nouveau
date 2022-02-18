@@ -21,30 +21,41 @@ import java.io.IOException;
 
 @CapacitorPlugin(name = "Bridge")
 public class BridgePlugin extends Plugin {
+    private String baseURL = "https://www.hommenouveau.fr/";
     private JSObject json;
-    private PluginCall publicCall;
+
+    // Bridge data between back and front
+    private PluginCall homeMetadataCall;
+    private PluginCall articleDataCall;
+    private PluginCall categoriesDataCall;
 
 
     @PluginMethod()
     public void echo(PluginCall call) {
         String value = call.getString("value");
-        Log.d("MSG: echo =", " " + call.getData().toString());
+        Log.d("MSG:", " " + value);
         JSObject ret = new JSObject();
         ret.put("value", value);
         call.resolve(ret);
     }
 
     @PluginMethod()
-    public  void  getHomeMetadata(PluginCall call) {
-        publicCall = call;
-        AsyncTask<String, Void, Void> metadata = new HomeArticlesMetadata().execute("https://www.hommenouveau.fr/");
+    public void  getHomeMetadata(PluginCall call) {
+        homeMetadataCall = call;
+        AsyncTask<String, Void, Void> metadata = new HomeArticlesMetadata().execute(baseURL);
     }
 
     @PluginMethod()
-    public  void  getHomeData(PluginCall call) {
-        String url = call.getString("url");
-        publicCall = call;
+    public void  getArticleData(PluginCall call) {
+        articleDataCall = call;
+        String url = articleDataCall.getString("url");
         AsyncTask<String, Void, Void> articleData = new ArticleData().execute(url);
+    }
+
+    @PluginMethod()
+    public void getCategoriesData(PluginCall call) {
+        categoriesDataCall = call;
+        AsyncTask<String, Void, Void> categoriesData = new CategoriesData().execute(baseURL);
     }
 
     private class HomeArticlesMetadata extends AsyncTask<String, Void, Void> {
@@ -100,7 +111,7 @@ public class BridgePlugin extends Plugin {
         }
 
         protected void onPostExecute(Void result) {
-            publicCall.resolve(json);
+            homeMetadataCall.resolve(json);
         }
     }
 
@@ -127,7 +138,41 @@ public class BridgePlugin extends Plugin {
         }
 
         protected void onPostExecute(Void result) {
-            publicCall.resolve(json);
+            articleDataCall.resolve(json);
+        }
+    }
+
+    private class CategoriesData extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+            try {
+                Document doc = Jsoup.connect(params[0]).timeout(0).get();
+
+                json = new JSObject();
+
+                // Get categories
+                Elements categoriesElements = doc.select("#menuMobile ul:eq(1) li");
+                JSONArray data = new JSONArray();
+
+                for (Element el : categoriesElements) {
+                    JSONObject infoCategory = new JSONObject();
+                    infoCategory.put("name", el.select("a").text());
+                    infoCategory.put("url", el.select("a").attr("href"));
+
+                    data.put(infoCategory);
+                }
+                json.put("categories", data);
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            categoriesDataCall.resolve(json);
         }
     }
 }

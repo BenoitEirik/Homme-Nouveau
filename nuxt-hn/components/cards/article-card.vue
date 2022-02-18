@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="'/article?url=' + encodeURI(url)" class="m-4 max-w-md rounded-lg shadow-lg overflow-hidden bg-white">
+  <nuxt-link :to="'/article?url=' + encodeURI(url)" class="m-2 max-w-md rounded-lg shadow-lg overflow-hidden bg-white">
     <div class="relative h-56">
       <img :src="img" class="h-full w-full object-cover">
       <div class="absolute inset-x-2 bottom-2 p-2 text-xl text-white font-bold text-shadow bg-black/50 rounded-lg">{{ title }}</div>
