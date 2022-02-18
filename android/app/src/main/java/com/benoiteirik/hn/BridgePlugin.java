@@ -52,33 +52,41 @@ public class BridgePlugin extends Plugin {
         AsyncTask<String, Void, Void> articleData = new ArticleData().execute(url);
     }
 
-    @PluginMethod()
-    public void getCategoriesData(PluginCall call) {
-        categoriesDataCall = call;
-        AsyncTask<String, Void, Void> categoriesData = new CategoriesData().execute(baseURL);
-    }
-
     private class HomeArticlesMetadata extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(String... params) {
             try {
                 Document doc = Jsoup.connect(params[0]).timeout(0).get();
-
-                json = new JSObject();
+                json = new JSObject();  // Type of variable not declared here because need to transfer data to main thread
+                int index = 0;
+                JSONArray categories = new JSONArray();
                 JSONArray primaryArticles = new JSONArray();
                 JSONArray secondaryArticles = new JSONArray();
 
+                // Get categories
+                Elements categoriesElements = doc.select("#menuMobile ul:eq(1) li");
+                for (Element el : categoriesElements) {
+                    JSONObject infoCategory = new JSONObject();
+                    infoCategory.put("id", index);
+                    infoCategory.put("name", el.select("a").text());
+                    infoCategory.put("url", el.select("a").attr("href"));
+
+                    categories.put(infoCategory);
+                    index++;
+                }
+
                 // Get swiper articles
                 Elements primaryArticleElements = doc.select("#aLaUne #diapo .viewport .overview li");
-                int index = 0;
+                index = 0;
                 for (Element el : primaryArticleElements) {
                     JSONObject infoArticle = new JSONObject();
                     infoArticle.put("id", index);
                     infoArticle.put("url", el.select(".titreDiapo").attr("href"));
                     infoArticle.put("img", el.select("a img").attr("src"));
                     infoArticle.put("title", el.select(".titreDiapo").text());
-                    infoArticle.put("description", el.select("#accroche").text());
+                    infoArticle.put("detail", el.select("div div").text());
+                    infoArticle.put("description", el.select("#accroche").first().ownText());
 
                     primaryArticles.put(infoArticle);
                     index++;
@@ -101,6 +109,7 @@ public class BridgePlugin extends Plugin {
                 }
 
                 // Join the json object
+                json.put("categories", categories);
                 json.put("primaryArticles", primaryArticles);
                 json.put("secondaryArticles", secondaryArticles);
             } catch (IOException | JSONException e) {
@@ -139,40 +148,6 @@ public class BridgePlugin extends Plugin {
 
         protected void onPostExecute(Void result) {
             articleDataCall.resolve(json);
-        }
-    }
-
-    private class CategoriesData extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected Void doInBackground(String... params) {
-
-            try {
-                Document doc = Jsoup.connect(params[0]).timeout(0).get();
-
-                json = new JSObject();
-
-                // Get categories
-                Elements categoriesElements = doc.select("#menuMobile ul:eq(1) li");
-                JSONArray data = new JSONArray();
-
-                for (Element el : categoriesElements) {
-                    JSONObject infoCategory = new JSONObject();
-                    infoCategory.put("name", el.select("a").text());
-                    infoCategory.put("url", el.select("a").attr("href"));
-
-                    data.put(infoCategory);
-                }
-                json.put("categories", data);
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        protected void onPostExecute(Void result) {
-            categoriesDataCall.resolve(json);
         }
     }
 }

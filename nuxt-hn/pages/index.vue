@@ -1,24 +1,28 @@
 <template>
   <main style="flex:2" class="overflow-y-auto">
     <div class="max-w-7xl mx-auto min-h-full flex flex-col justify-center items-center">
-      <categories />
-      <div v-if="loaded" class="w-full h-full flex justify-center flex-wrap">
+      <categories v-if="loadedData" :categories="data.categories" />
+      <div v-if="loadedData" class="w-full h-full flex justify-center flex-wrap">
+        <!-- Articles À la Une -->
         <article-card
-          v-for="article in articles.primaryArticles"
+          v-for="article in data.primaryArticles"
           :key="'p' + String(article.id)"
           :id="article.id"
           :url="article.url"
           :img="article.img"
           :title="article.title"
+          :detail="article.detail"
           :description="article.description"
         />
+        <!-- Derniers articles publié -->
         <article-card
-          v-for="article in articles.secondaryArticles"
+          v-for="article in data.secondaryArticles"
           :key="article.id"
           :id="article.id"
           :url="article.url"
           :img="article.img"
           :title="article.title"
+          :detail="article.detail"
           :description="article.description"
         />
       </div>
@@ -37,13 +41,13 @@ export default {
   components: { articleCard, SvgLoader, Categories },
   data () {
     return {
-      loaded: false,
-      articles: Object
+      loadedData: false,
+      data: Object
     }
   },
   async fetch () {
-    this.articles = await Bridge.getHomeMetadata()
-    this.loaded = true
+    this.data = await Bridge.getHomeMetadata()
+    this.loadedData = true
   },
   mounted () {
     this.$nuxt.$emit('back-icon', false)

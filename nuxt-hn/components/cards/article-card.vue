@@ -1,11 +1,12 @@
 <template>
-  <nuxt-link :to="'/article?url=' + encodeURI(url)" class="m-2 max-w-md rounded-lg shadow-lg overflow-hidden bg-white">
-    <div class="relative h-56">
-      <img :src="img" class="h-full w-full object-cover">
-      <div class="absolute inset-x-2 bottom-2 p-2 text-xl text-white font-bold text-shadow bg-black/50 rounded-lg">{{ title }}</div>
+  <nuxt-link :to="'/article?url=' + encodeURI(url)" class="mx-2 my-1 max-w-md rounded-lg shadow-lg overflow-hidden bg-white">
+    <div class="relative h-56 overflow-hidden">
+      <img :src="img" class="absolute h-full w-full object-cover blur-sm">
+      <img :src="img" class="absolute h-full w-full object-contain">
+      <div class="absolute inset-x-0 bottom-0 p-2 font-bold text-md text-white text-shadow bg-black/50">{{ title }}</div>
     </div>
-    <div class="pt-4 px-4 pb-2 text-gray-400">Religion, rédigé par un moine de Triors - Publié le: 12/02/2022 </div>
-    <div class="pt-2 px-4 pb-4">{{ description }}</div>
+    <div class="pt-2 px-2 pb-1 text-sm text-gray-400">{{ detail }}</div>
+    <div class="pt-1 px-2 pb-2 font-normal">{{ description }}</div>
   </nuxt-link>
 </template>
 
@@ -16,6 +17,7 @@ export default {
     url: String,
     img: String,
     title: String,
+    detail: String,
     description: String
   }
 }

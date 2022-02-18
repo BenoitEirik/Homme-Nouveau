@@ -10,20 +10,9 @@
 </template>
 
 <script>
-import Bridge from '~/plugins/capacitor'
-
 export default {
-  data () {
-    return {
-      loaded: false,
-      categories: []
-    }
-  },
-  async fetch () {
-    const data = await Bridge.getCategoriesData()
-    this.categories = data.categories
-    console.log('Categories =', this.categories)
-    this.loaded = true
+  props: {
+    categories: []
   }
 }
 </script>
