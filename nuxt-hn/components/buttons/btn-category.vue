@@ -1,5 +1,5 @@
 <template>
-  <button class="flex-auto m-1 p-3 rounded-md text-white font-bold bg-red-700">
+  <button class="flex-auto m-1 p-2 rounded-md text-white font-bold bg-red-700">
     {{ name }}
   </button>
 </template>
