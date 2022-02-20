@@ -185,7 +185,6 @@ public class BridgePlugin extends Plugin {
 
                 // Get next articles
                 articlesElements = doc.select("#plusCommentes article");
-                index = 0;
                 for (Element el : articlesElements) {
                     JSONObject infoArticle = new JSONObject();
                     infoArticle.put("id", index);
