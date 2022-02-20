@@ -1,7 +1,9 @@
 <template>
   <main style="flex:2" class="overflow-y-auto">
     <div class="max-w-7xl mx-auto min-h-full flex flex-col justify-center items-center">
+      <title-category v-if="loadedData" name="Catégories" />
       <categories v-if="loadedData" :categories="data.categories" />
+      <title-category v-if="loadedData" name="Derniers Articles" />
       <div v-if="loadedData" class="w-full h-full flex justify-center flex-wrap">
         <!-- Articles À la Une -->
         <article-card

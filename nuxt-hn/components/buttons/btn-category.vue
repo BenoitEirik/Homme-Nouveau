@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="'/explorer?url=' + encodeURI(getPageURL())" class="flex-auto m-1 p-2 rounded-md text-center text-white font-bold bg-red-700">
+  <nuxt-link :to="'/explorer?url=' + encodeURI(getPageURL()) + '&name=' + name" class="flex-auto m-1 p-2 rounded-md text-center text-white font-bold bg-red-700">
     {{ name }}
   </nuxt-link>
 </template>

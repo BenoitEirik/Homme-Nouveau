@@ -168,8 +168,24 @@ public class BridgePlugin extends Plugin {
                 int index = 0;
                 JSONArray articles = new JSONArray();
 
-                // Get last articles
-                Elements articlesElements = doc.select("#plusCommentes article");
+                // Get first articles
+                Elements articlesElements = doc.select("#aLaUne-suite article");
+                for (Element el : articlesElements) {
+                    JSONObject infoArticle = new JSONObject();
+                    infoArticle.put("id", index);
+                    infoArticle.put("url", el.select("a").attr("href"));
+                    infoArticle.put("img", el.select("a .conteneurImg img").attr("src"));
+                    infoArticle.put("title", el.select("a h1").text());
+                    infoArticle.put("detail", el.select("a .detailBillet").text());
+                    infoArticle.put("description", el.select("a .fck p").text());
+
+                    articles.put(infoArticle);
+                    index++;
+                }
+
+                // Get next articles
+                articlesElements = doc.select("#plusCommentes article");
+                index = 0;
                 for (Element el : articlesElements) {
                     JSONObject infoArticle = new JSONObject();
                     infoArticle.put("id", index);

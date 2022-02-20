@@ -1,6 +1,7 @@
 <template>
   <main style="flex:2" class="overflow-y-auto">
     <div class="max-w-7xl mx-auto min-h-full flex flex-col justify-center items-center">
+      <title-category v-if="loadedData" :name="this.titleCategory" />
       <div v-if="loadedData" class="w-full h-full flex justify-center flex-wrap">
         <!-- Articles de la catégorie x à la page y -->
         <article-card
@@ -29,11 +30,13 @@ export default {
   data () {
     return {
       loadedData: false,
-      data: Object
+      data: Object,
+      titleCategory: String
     }
   },
   async fetch () {
     const searchParams = new URLSearchParams(window.location.search)
+    this.titleCategory = searchParams.get('name')
     this.data = await Bridge.getExplorerMetadata({ url: decodeURI(searchParams.get('url')) })
     this.loadedData = true
   },
