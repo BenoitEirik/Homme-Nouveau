@@ -3,9 +3,9 @@
     <div class="relative h-56 overflow-hidden">
       <img :src="img" class="absolute h-full w-full object-cover blur-sm">
       <img :src="img" class="absolute h-full w-full object-contain">
-      <div class="absolute inset-x-0 bottom-0 p-2 font-bold text-md text-white text-shadow bg-black/50">{{ title }}</div>
+      <div class="absolute inset-x-0 bottom-0 p-4 font-bold text-md text-white text-shadow bg-black/50">{{ title }}</div>
     </div>
-    <div class="pt-2 px-4 pb-2 text-sm text-gray-400">{{ detail }}</div>
+    <div class="pt-2 px-4 text-sm text-gray-400 italic">{{ detail }}</div>
     <div class="pt-2 px-4 pb-4">{{ description }}</div>
   </nuxt-link>
 </template>

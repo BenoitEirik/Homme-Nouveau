@@ -28,6 +28,7 @@ public class BridgePlugin extends Plugin {
     private PluginCall homeMetadataCall;
     private PluginCall articleDataCall;
     private PluginCall categoriesDataCall;
+    private PluginCall explorerMetadataCall;
 
 
     @PluginMethod()
@@ -50,6 +51,13 @@ public class BridgePlugin extends Plugin {
         articleDataCall = call;
         String url = articleDataCall.getString("url");
         AsyncTask<String, Void, Void> articleData = new ArticleData().execute(url);
+    }
+
+    @PluginMethod()
+    public void getExplorerMetadata(PluginCall call) {
+        explorerMetadataCall = call;
+        String url = explorerMetadataCall.getString("url");
+        AsyncTask<String, Void, Void> metadata = new ExplorerArticlesMetadata().execute(url);
     }
 
     private class HomeArticlesMetadata extends AsyncTask<String, Void, Void> {
@@ -148,6 +156,45 @@ public class BridgePlugin extends Plugin {
 
         protected void onPostExecute(Void result) {
             articleDataCall.resolve(json);
+        }
+    }
+
+    private class ExplorerArticlesMetadata extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                Document doc = Jsoup.connect(params[0]).timeout(0).get();
+                json = new JSObject();  // Type of variable not declared here because need to transfer data to main thread
+                int index = 0;
+                JSONArray articles = new JSONArray();
+
+                // Get last articles
+                Elements articlesElements = doc.select("#plusCommentes article");
+                for (Element el : articlesElements) {
+                    JSONObject infoArticle = new JSONObject();
+                    infoArticle.put("id", index);
+                    infoArticle.put("url", el.select("a").attr("href"));
+                    infoArticle.put("img", el.select("a .conteneurImg img").attr("src"));
+                    infoArticle.put("title", el.select("a h1").text());
+                    infoArticle.put("detail", el.select("a .detailBillet").text());
+                    infoArticle.put("description", el.select("a .fck p").text());
+
+                    articles.put(infoArticle);
+                    index++;
+                }
+
+                // Join the json object
+                json.put("articles", articles);
+            } catch (IOException | JSONException e) {
+                System.out.println(e);
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            Log.d("MSG:", json.toString());
+            explorerMetadataCall.resolve(json);
         }
     }
 }
