@@ -121,7 +121,7 @@ public class BridgePlugin extends Plugin {
                 json.put("primaryArticles", primaryArticles);
                 json.put("secondaryArticles", secondaryArticles);
             } catch (IOException | JSONException e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
 
             return null;
@@ -148,7 +148,7 @@ public class BridgePlugin extends Plugin {
                 json.put("content", el.select(".fck").html());
 
             } catch (IOException e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
 
             return null;
@@ -198,17 +198,20 @@ public class BridgePlugin extends Plugin {
                     index++;
                 }
 
+                // Pagination
+                Elements pagination = doc.select(".pagination span");
+
                 // Join the json object
                 json.put("articles", articles);
+                json.put("pagination", pagination.get(0).text());
             } catch (IOException | JSONException e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
 
             return null;
         }
 
         protected void onPostExecute(Void result) {
-            Log.d("MSG:", json.toString());
             explorerMetadataCall.resolve(json);
         }
     }

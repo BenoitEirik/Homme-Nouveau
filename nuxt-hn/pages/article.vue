@@ -1,7 +1,7 @@
 <template>
   <main style="flex: 2" class="overflow-y-auto">
     <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8 min-h-full flex justify-center items-center">
-      <div v-if="loaded" class="p-4 w-full h-full rounded-2xl shadow-lg">
+      <div v-if="loaded" class="p-4 w-full h-full rounded-2xl my-article">
         <div v-text="article.title" class="text-xl font-bold text-red-700 underline" />
         <div id="dynamic-content" v-html="article.content" class="leading-relaxed text-base espace-btn-el" />
       </div>
@@ -26,9 +26,6 @@ export default {
     this.loaded = true
     this.formatVirtualHtml()
   },
-  mounted () {
-    this.$nuxt.$emit('back-icon', true)
-  },
   methods: {
     async echo (value) {
       const { data } = await Bridge.echo({ value })
@@ -39,7 +36,6 @@ export default {
         // Transform relative path to absolute path for imgs
         const myDomain = 'www.hommenouveau.fr'
         const imgs = document.getElementById('dynamic-content').getElementsByTagName('img')
-        this.echo('imgs = ' + imgs)
         for (let i = 0; i < imgs.length; i++) {
           const myURL = imgs[i].src
           let finalURL
@@ -54,11 +50,18 @@ export default {
         }
       })
     }
+  },
+  mounted () {
+    this.$nuxt.$emit('back-icon', true)
   }
 }
 </script>
 
 <style scoped>
+.my-article {
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
 .espace-btn-el >>> * {
   padding-top: 4px;
   padding-bottom: 4px;
