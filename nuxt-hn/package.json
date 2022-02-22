@@ -26,6 +26,7 @@
     "swiper": "^5.4.5",
     "url": "^0.11.0",
     "vue": "^2.6.14",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
     "webpack": "^4.46.0"

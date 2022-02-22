@@ -1,20 +1,10 @@
 <template>
   <main style="flex:2" class="overflow-y-auto">
     <div class="max-w-7xl mx-auto min-h-full flex flex-col justify-center items-center">
+      <swiper-a-la-une v-if="loadedData" :primaryArticles="data.primaryArticles" />
       <categories v-if="loadedData" :categories="data.categories" />
       <title-category v-if="loadedData" name="Derniers Articles" />
       <div v-if="loadedData" class="w-full h-full flex justify-center flex-wrap">
-        <!-- Articles À la Une -->
-        <article-card
-          v-for="article in data.primaryArticles"
-          :key="'p' + String(article.id)"
-          :id="article.id"
-          :url="article.url"
-          :img="article.img"
-          :title="article.title"
-          :detail="article.detail"
-          :description="article.description"
-        />
         <!-- Derniers articles publié -->
         <article-card
           v-for="article in data.secondaryArticles"
@@ -39,7 +29,11 @@ import SvgLoader from '~/components/svg-loader.vue'
 import Bridge from '~/plugins/capacitor'
 
 export default {
-  components: { articleCard, SvgLoader, Categories },
+  components: {
+    articleCard,
+    SvgLoader,
+    Categories
+  },
   data () {
     return {
       loadedData: false,
