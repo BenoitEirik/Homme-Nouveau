@@ -1,5 +1,5 @@
 <template>
-  <div class="px-3 py-1 w-full flex flex-wrap">
+  <div class="p-3 w-full flex flex-wrap">
     <btn-category
       v-for="category in categories"
       :key="category.name"

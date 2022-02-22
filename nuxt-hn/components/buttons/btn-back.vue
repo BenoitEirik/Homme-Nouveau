@@ -2,9 +2,9 @@
   <nuxt-link to="/" class="px-4 py-2">
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height="36px"
+      height="24px"
       viewBox="0 0 24 24"
-      width="36px"
+      width="24px"
       fill="#b91c1c"
     >
       <path d="M0 0h24v24H0V0z" fill="none" />
