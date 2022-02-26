@@ -44,7 +44,7 @@ export default {
     this.data = await Bridge.getHomeMetadata()
     this.loadedData = true
   },
-  mounted () {
+  activated () {
     this.$nuxt.$emit('back-icon', false)
   }
 }

@@ -4,6 +4,14 @@ export default {
   ssr: false,
   target: 'static',
 
+  generate: {
+    fallback: true,
+    exclude: [
+      '/explorer',
+      '/article'
+    ]
+  },
+
   // For live-reload debug with Capacitor.js
   server: {
     host: '0.0.0.0',

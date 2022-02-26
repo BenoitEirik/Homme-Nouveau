@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: {
     pagination: String, // String like: 'Page 1 de 5'
@@ -20,25 +22,20 @@ export default {
   },
   data () {
     return {
-      originalURL: String,
       totalNumberOfPages: Number
     }
   },
   methods: {
+    ...mapActions(['setExplorerState']),
     goToNextPage (newPageNumber) {
       // Check if newPageNumber is valid
       if (newPageNumber < 1 || newPageNumber > this.totalNumberOfPages) {
         return
       }
-      // Make the new URL and send it to parent
-      const indexLastSlash = this.originalURL.lastIndexOf('/')
-      const newURL = this.originalURL.slice(0, indexLastSlash) + '/' + String(newPageNumber) + this.originalURL.slice(indexLastSlash)
-      this.$parent.getNextArticles(newURL, newPageNumber)
+      this.setExplorerState({ pageNumber: newPageNumber })
     }
   },
   beforeMount () {
-    const searchParams = new URLSearchParams(window.location.search)
-    this.originalURL = decodeURI(searchParams.get('originalURL'))
     this.totalNumberOfPages = Number(this.pagination.slice(this.pagination.lastIndexOf('de ') + 3))
   }
 }
