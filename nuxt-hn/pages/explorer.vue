@@ -2,8 +2,8 @@
   <main style="flex:2" class="overflow-y-auto">
     <div class="max-w-7xl mx-auto min-h-full flex flex-col justify-center items-center">
       <title-category :name="explorerState.categoryName" />
-      <pagination v-if="!explorerState.loading" :pagination="data.pagination" :pageNumber="explorerState.pageNumber" />
-      <div v-if="!explorerState.loading" class="w-full h-full flex justify-center flex-wrap">
+      <pagination v-if="loadedData" :pagination="data.pagination" :pageNumber="explorerState.pageNumber" />
+      <div v-if="loadedData" class="w-full h-full flex justify-center flex-wrap">
         <!-- Articles de la catégorie x à la page y -->
         <article-card
           v-for="article in data.articles"
@@ -16,7 +16,7 @@
           :description="article.description"
         />
       </div>
-      <pagination v-if="!explorerState.loading" :pagination="data.pagination" :pageNumber="explorerState.pageNumber" />
+      <pagination v-if="loadedData" :pagination="data.pagination" :pageNumber="explorerState.pageNumber" />
       <svg-loader v-else color="#b91c1c" />
     </div>
   </main>
@@ -32,6 +32,7 @@ export default {
   components: { articleCard, SvgLoader },
   data () {
     return {
+      loadedData: false,
       data: Object
     }
   },
@@ -45,11 +46,12 @@ export default {
   },
   created () {
     this.unwatch = this.$store.watch(
-      (state, getters) => getters.explorerLoading,
+      (state, getters) => getters.explorerState,
       (newValue, oldValue) => {
-        if (newValue === true) {
+        if (newValue.metadataURL !== oldValue.metadataURL) {
+          this.loadedData = false
           this.fetchMetadata().then(() => {
-            this.$store.commit('SET_EXPLORER_LOADING', false)
+            this.loadedData = true
           })
         }
       }
@@ -57,8 +59,9 @@ export default {
   },
   mounted () {
     // Get data by watching for first time
+    this.loadedData = false
     this.fetchMetadata().then(() => {
-      this.$store.commit('SET_EXPLORER_LOADING', false)
+      this.loadedData = true
     })
   },
   activated () {
