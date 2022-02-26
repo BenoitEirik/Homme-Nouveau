@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Bridge from '~/plugins/capacitor'
 
 export default {
@@ -20,16 +21,12 @@ export default {
       article: {}
     }
   },
-  async fetch () {
-    const searchParams = new URLSearchParams(window.location.search)
-    this.article = await Bridge.getArticleData({ url: decodeURI(searchParams.get('url')) })
-    this.loaded = true
-    this.formatVirtualHtml()
+  computed: {
+    ...mapState(['articleState'])
   },
   methods: {
-    async echo (value) {
-      const { data } = await Bridge.echo({ value })
-      console.log('ConsoleLog: ', String(data.value))
+    async fetchArticle () {
+      this.article = await Bridge.getArticleData({ url: this.articleState.articleURL })
     },
     formatVirtualHtml () {
       this.$nextTick(function () {
@@ -51,7 +48,29 @@ export default {
       })
     }
   },
+  created () {
+    this.unwatch = this.$store.watch(
+      (state, getters) => getters.getArticleState,
+      (newValue, oldValue) => {
+        if (newValue.articleURL !== oldValue.articleURL) {
+          this.loaded = false
+          this.fetchArticle().then(() => {
+            this.loaded = true
+            this.formatVirtualHtml()
+          })
+        }
+      }
+    )
+  },
   mounted () {
+    // Get data by watching for first time
+    this.loaded = false
+    this.fetchArticle().then(() => {
+      this.loaded = true
+      this.formatVirtualHtml()
+    })
+  },
+  activated () {
     this.$nuxt.$emit('back-icon', true)
   }
 }
@@ -65,7 +84,7 @@ export default {
 .espace-btn-el >>> .publication {
   font-style: italic;
 }
-.espace-btn-el >>> img,  .espace-btn-el >>> iframe{
+.espace-btn-el >>> img,  .espace-btn-el >>> iframe {
   margin-left: auto;
   margin-right: auto;
 }

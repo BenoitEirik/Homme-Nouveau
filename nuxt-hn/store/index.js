@@ -1,26 +1,36 @@
 /* #data */
 const state = () => ({
-  // Explorer page
+  // Explorer state
   explorerState: {
     categoryURL: String,
     metadataURL: String,
     categoryName: String,
     pageNumber: Number
+  },
+  // Article state
+  articleState: {
+    articleURL: String
   }
 })
 
-/* All states mutations */
+/* mutations for actions */
 const mutations = {
   SET_EXPLORER_STATE (state, data) {
     state.explorerState = data
+  },
+  SET_ARTICLE_STATE (state, data) {
+    state.articleState = data
   }
 }
 
 /* #computed */
 const getters = {
-  // Necessary for watcher
+  // Necessary for watchers
   explorerState (state) {
     return state.explorerState
+  },
+  getArticleState (state) {
+    return state.articleState
   }
 }
 
@@ -40,6 +50,11 @@ const actions = {
       metadataURL,
       categoryName: newCategoryName,
       pageNumber
+    })
+  },
+  setArticleState (context, articleURL) {
+    context.commit('SET_ARTICLE_STATE', {
+      articleURL
     })
   }
 }
