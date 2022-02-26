@@ -8,11 +8,11 @@ const config: CapacitorConfig = {
   android: {
     path: "../android"
   },
-  /* server: {
+  /*server: {
     url: 'http://192.168.56.1:3000/',
     cleartext: true,
     androidScheme: 'http'
-  } */
+  }*/
 };
 
 export default config;

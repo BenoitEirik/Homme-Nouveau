@@ -2,7 +2,7 @@
   <main style="flex:2" class="overflow-y-auto">
     <div class="max-w-7xl mx-auto min-h-full flex flex-col justify-center items-center">
       <title-category :name="explorerState.categoryName" />
-      <pagination v-if="loadedData" :pagination="data.pagination" :pageNumber="explorerState.pageNumber" />
+      <pagination v-if="data.hasOwnProperty('pagination')" :pagination="data.pagination" :pageNumber="explorerState.pageNumber" />
       <div v-if="loadedData" class="w-full h-full flex justify-center flex-wrap">
         <!-- Articles de la catégorie x à la page y -->
         <article-card
@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     async fetchMetadata () {
-      this.data = await Bridge.getExplorerMetadata({ url: this.explorerState.categoryURL })
+      this.data = await Bridge.getExplorerMetadata({ url: this.explorerState.metadataURL })
     }
   },
   created () {
