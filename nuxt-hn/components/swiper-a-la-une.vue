@@ -2,7 +2,7 @@
   <swiper ref="mySwiper" :options="swiperOptions" class="swiper w-full h-64">
     <!-- Articles À la Une -->
     <swiper-slide v-for="article in primaryArticles" :key="article.id">
-      <nuxt-link :to="'/article?url=' + encodeURI(article.url)">
+      <div @click="goToArticlePage(article.url)">
         <div class="relative h-64 overflow-hidden">
           <img
             :src="article.img"
@@ -16,13 +16,15 @@
             {{ article.title }}
           </div>
         </div>
-      </nuxt-link>
+      </div>
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination" />
   </swiper>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: {
     primaryArticles: Array
@@ -45,6 +47,13 @@ export default {
           }
         }
       }
+    }
+  },
+  methods: {
+    ...mapActions(['setArticleState']),
+    goToArticlePage (url) {
+      this.setArticleState(url)
+      this.$router.push('/article')
     }
   }
 }

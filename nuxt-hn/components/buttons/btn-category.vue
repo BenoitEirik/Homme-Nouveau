@@ -1,5 +1,5 @@
 <template>
-  <button @click="goToExplorerPage()" class="flex-auto m-1 p-2 rounded-md text-center text-white font-bold bg-red-700">
+  <button @click="goToExplorerPage()" class="flex-auto m-1 p-2 rounded-full text-center text-sm text-red-700 font-bold border border-red-700">
     {{ name }}
   </button>
 </template>

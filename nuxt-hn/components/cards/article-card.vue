@@ -6,7 +6,7 @@
       <div class="absolute inset-x-0 bottom-0 p-4 font-bold text-md text-white text-shadow bg-black/50">{{ title }}</div>
     </div>
     <div class="pt-2 px-4 text-sm text-gray-400 italic">{{ detail }}</div>
-    <div class="pt-2 px-4 pb-4">{{ description }}</div>
+    <div class="pt-2 px-4 pb-4 text-justify">{{ description }}</div>
   </button>
 </template>
 
