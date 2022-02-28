@@ -3,6 +3,7 @@
     <div class="relative max-w-7xl mx-auto mt-8 p-3 sm:px-6 lg:px-8 flex justify-center items-center">
       <btn-back class="absolute left-0" />
       <img src="@/assets/logo/logo-large.png" class="h-9" />
+      <btn-search class="absolute right-0" />
     </div>
   </nav>
 </template>

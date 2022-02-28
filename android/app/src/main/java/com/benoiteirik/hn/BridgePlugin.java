@@ -27,8 +27,8 @@ public class BridgePlugin extends Plugin {
     // Bridge data between back and front
     private PluginCall homeMetadataCall;
     private PluginCall articleDataCall;
-    private PluginCall categoriesDataCall;
     private PluginCall explorerMetadataCall;
+    private PluginCall searchArticlesMetadata;
 
 
     @PluginMethod()
@@ -58,6 +58,13 @@ public class BridgePlugin extends Plugin {
         explorerMetadataCall = call;
         String url = explorerMetadataCall.getString("url");
         AsyncTask<String, Void, Void> metadata = new ExplorerArticlesMetadata().execute(url);
+    }
+
+    @PluginMethod()
+    public void getSearchArticlesMetadata(PluginCall call) {
+        searchArticlesMetadata = call;
+        String searchString = searchArticlesMetadata.getString("searchString");
+        AsyncTask<String, Void, Void> metadata = new SearchArticlesMetadata().execute(searchString);
     }
 
     private class HomeArticlesMetadata extends AsyncTask<String, Void, Void> {
@@ -213,6 +220,46 @@ public class BridgePlugin extends Plugin {
 
         protected void onPostExecute(Void result) {
             explorerMetadataCall.resolve(json);
+        }
+    }
+
+
+    private class SearchArticlesMetadata extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                Document doc = Jsoup.connect("https://www.hommenouveau.fr/recherche.htm?search=" + params[0]).timeout(0).get();
+                json = new JSObject();  // Type of variable not declared here because need to transfer data to main thread
+                int index = 0;
+                JSONArray articles = new JSONArray();
+
+                // Get next articles
+                Elements articlesElements = doc.select("#plusCommentes article");
+                for (Element el : articlesElements) {
+                    JSONObject infoArticle = new JSONObject();
+                    infoArticle.put("id", index);
+                    infoArticle.put("url", el.select("a").attr("href"));
+                    infoArticle.put("img", el.select("a .conteneurImg img").attr("src"));
+                    infoArticle.put("title", el.select("a h1").text());
+                    infoArticle.put("detail", el.select("a .detailBillet").text());
+                    infoArticle.put("description", el.select("a .fck p").text());
+
+                    articles.put(infoArticle);
+                    index++;
+                }
+
+                // Join the json object
+                json.put("articles", articles);
+                Log.d("MSG:", json.toString(4));
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            searchArticlesMetadata.resolve(json);
         }
     }
 }

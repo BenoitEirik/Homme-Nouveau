@@ -5,5 +5,8 @@ project(':capacitor-android').projectDir = new File('../nuxt-hn/node_modules/@ca
 include ':capacitor-app'
 project(':capacitor-app').projectDir = new File('../nuxt-hn/node_modules/@capacitor/app/android')
 
+include ':capacitor-keyboard'
+project(':capacitor-keyboard').projectDir = new File('../nuxt-hn/node_modules/@capacitor/keyboard/android')
+
 include ':capacitor-status-bar'
 project(':capacitor-status-bar').projectDir = new File('../nuxt-hn/node_modules/@capacitor/status-bar/android')

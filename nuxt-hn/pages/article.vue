@@ -1,6 +1,6 @@
 <template>
   <main style="flex: 2" class="overflow-y-auto">
-    <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8 min-h-full flex justify-center items-center">
+    <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8 min-h-full flex justify-start items-center">
       <div v-if="loaded" class="p-4 w-full h-full rounded-2xl sm:shadow-md">
         <div v-text="article.title" class="text-2xl font-bold text-red-700" />
         <div id="dynamic-content" v-html="article.content" class="leading-relaxed text-base espace-btn-el" />
