@@ -1,5 +1,5 @@
 <template>
-  <swiper ref="mySwiper" :options="swiperOptions" class="swiper w-full bg-red-700">
+  <swiper ref="mySwiper" :options="swiperOptions" class="mb-2 swiper w-full bg-red-700">
     <!-- Articles À la Une -->
     <swiper-slide v-for="article in primaryArticles" :key="article.id">
       <div @click="goToArticlePage(article.url)">
@@ -33,6 +33,10 @@ export default {
       swiperOptions: {
         slidesPerView: 1,
         loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false
+        },
         pagination: {
           el: '.swiper-pagination',
           clickable: true
@@ -64,11 +68,12 @@ export default {
 }
 .swiper-pagination >>> .swiper-pagination-bullet {
   opacity: 1 !important;
-  width: 6px !important;
-  height: 6px !important;
-  background-color: #fff !important;
+  width: 8px !important;
+  height: 8px !important;
+  background-color: #B91C1C !important;
+  border: 1px solid #fff;
 }
 .swiper-pagination >>> .swiper-pagination-bullet-active {
-  background-color: #cfaf1d !important;
+  background-color: #fff !important;
 }
 </style>

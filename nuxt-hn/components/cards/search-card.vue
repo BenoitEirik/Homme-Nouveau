@@ -1,6 +1,6 @@
 <template>
-  <div @click="goToArticlePage()" class="px-3 py-2">
-    <div class="p-3 w-full flex space-x-2 rounded-lg" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+  <div @click="goToArticlePage()" class="px-3 py-1">
+    <div class="p-3 w-full flex space-x-2 rounded-lg overflow-hidden" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
       <img :src="article.img" class="w-24 object-contain">
       <div>
         <div class="text-base line-clamp-2 text-red-700">{{ article.title }}</div>
