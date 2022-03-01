@@ -1,6 +1,6 @@
 <template>
   <main style="flex:2" class="overflow-y-auto">
-    <div class="max-w-7xl mx-auto min-h-full flex flex-col justify-start items-center">
+    <div class="max-w-7xl mx-auto max-h-full flex flex-col justify-start items-center">
       <div class="w-full flex border-b border-gray-300">
         <input
           type="text"
@@ -11,7 +11,7 @@
         />
         <btn-cancel v-if="searchString !== ''" />
       </div>
-      <div v-if="loadedData" class="w-full h-full"><!-- WARNING: overflow doesn't work with flex ! And has need height fixed to his parent -->
+      <div v-if="loadedData" class="w-full overflow-y-auto"><!-- WARNING: overflow doesn't work with flex ! And has need height fixed to his parent -->
         <search-card v-for="article in data.articles" :key="article.id" :article="article" />
       </div>
       <div v-else class="h-full flex justify-center items-center">

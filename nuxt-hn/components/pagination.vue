@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 w-full flex justify-center items-center text-xl font-bold text-red-700">
+  <div class="p-4 w-full flex justify-center items-center text-md font-bold text-red-700">
     <div @click="goToNextPage(pageNumber - 1)" class="px-4">
       <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 0 24 24" width="36px" :fill="(pageNumber === 1) ? '#d1d5db':'#b91c1c'"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z"/></svg>
     </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen flex flex-col">
-    <MyHeader />
-    <Nuxt keep-alive />
+    <MyHeader class="z-50" />
+    <Nuxt keep-alive class="z-0" />
     <MyFooter />
   </div>
 </template>
