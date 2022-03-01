@@ -1,7 +1,7 @@
 <template>
   <button @click="goToArticlePage()" class="mx-4 my-2 max-w-md rounded-lg my-article-card overflow-hidden bg-white">
     <div class="relative h-56 overflow-hidden">
-      <img :src="img" class="absolute h-full w-full object-cover blur-sm">
+      <img :src="img" class="absolute h-full w-full object-cover blur-sm scale-105">
       <img :src="img" class="absolute h-full w-full object-contain">
       <div class="absolute inset-x-0 bottom-0 p-4 font-bold text-md text-white text-shadow bg-black/50">{{ title }}</div>
     </div>

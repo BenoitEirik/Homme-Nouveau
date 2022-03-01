@@ -14,7 +14,7 @@
       <div v-if="loadedData" class="w-full overflow-y-auto"><!-- WARNING: overflow doesn't work with flex ! And has need height fixed to his parent -->
         <search-card v-for="article in data.articles" :key="article.id" :article="article" />
       </div>
-      <div v-else class="h-full flex justify-center items-center">
+      <div v-else>
         <svg-loader color="#b91c1c" />
       </div>
     </div>

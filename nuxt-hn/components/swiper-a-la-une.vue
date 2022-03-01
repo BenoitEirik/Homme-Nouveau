@@ -1,20 +1,19 @@
 <template>
-  <swiper ref="mySwiper" :options="swiperOptions" class="swiper w-full h-64">
+  <swiper ref="mySwiper" :options="swiperOptions" class="swiper w-full bg-red-700">
     <!-- Articles À la Une -->
     <swiper-slide v-for="article in primaryArticles" :key="article.id">
       <div @click="goToArticlePage(article.url)">
-        <div class="relative h-64 overflow-hidden">
+        <div class="relative h-52 overflow-hidden">
           <img
             :src="article.img"
-            class="absolute h-full w-full object-cover blur-sm"
+            class="absolute h-full w-full object-cover blur-sm scale-105"
           />
           <img :src="article.img" class="absolute h-full w-full object-contain" />
-          <div
-            class="absolute inset-x-0 bottom-0 p-4 font-bold text-md text-white text-shadow-swiper-slide bg-black/50"
-            style="text-shadow: -1px 0 #b01329, 0 1px #b01329, 1px 0 #b01329, 0 -1px #b01329;"
-          >
-            {{ article.title }}
-          </div>
+        </div>
+        <div
+          class="mt-4 mx-4 mb-5 h-14 font-bold text-lg text-white line-clamp-2 bg-red-700"
+        >
+          {{ article.title }}
         </div>
       </div>
     </swiper-slide>
@@ -61,15 +60,15 @@ export default {
 
 <style scoped>
 .swiper-pagination {
-  height: 14px !important;
+  height: 16px !important;
 }
 .swiper-pagination >>> .swiper-pagination-bullet {
   opacity: 1 !important;
   width: 6px !important;
   height: 6px !important;
-  background-color: #d1d5db !important;
+  background-color: #fff !important;
 }
 .swiper-pagination >>> .swiper-pagination-bullet-active {
-  background-color: #b91c1c !important;
+  background-color: #cfaf1d !important;
 }
 </style>
