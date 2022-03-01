@@ -4,7 +4,7 @@
       <swiper-a-la-une v-if="loadedData" :primaryArticles="data.primaryArticles" />
       <categories v-if="loadedData" :categories="data.categories" />
       <title-category v-if="loadedData" name="Derniers Articles" />
-      <div v-if="loadedData" class="w-full h-full flex justify-center flex-wrap">
+      <div v-if="loadedData" class="mb-2 w-full h-full flex justify-center flex-wrap">
         <!-- Derniers articles publié -->
         <article-card
           v-for="article in data.secondaryArticles"

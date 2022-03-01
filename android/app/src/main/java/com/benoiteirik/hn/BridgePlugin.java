@@ -248,8 +248,14 @@ public class BridgePlugin extends Plugin {
                     index++;
                 }
 
+                // Pagination
+                Elements pagination = doc.select(".pagination span");
+
                 // Join the json object
                 json.put("articles", articles);
+                if (!pagination.isEmpty()) {
+                    json.put("pagination", pagination.get(0).text());
+                }
                 Log.d("MSG:", json.toString(4));
             } catch (IOException | JSONException e) {
                 e.printStackTrace();

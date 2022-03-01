@@ -6,15 +6,16 @@
           type="text"
           v-model="searchString"
           placeholder="Rechercher..."
-          @keyup.enter="fetchSearchArticlesMetadata()"
+          @keyup.enter="fetchSearchArticlesMetadata(1)"
           class="w-full p-4"
         />
         <btn-cancel v-if="searchString !== ''" />
       </div>
       <div v-if="loadedData" class="w-full overflow-y-auto"><!-- WARNING: overflow doesn't work with flex ! And has need height fixed to his parent -->
         <search-card v-for="article in data.articles" :key="article.id" :article="article" />
+        <search-pagination v-if="(loadedData && data.hasOwnProperty('pagination')) || !loadingMore" :pagination="data.pagination" />
       </div>
-      <div v-else>
+      <div v-if="!loadedData || loadingMore">
         <svg-loader color="#b91c1c" />
       </div>
     </div>
@@ -33,18 +34,31 @@ export default {
     return {
       searchString: '',
       loadedData: true,
+      loadingMore: false,
       data: Object
     }
   },
   methods: {
-    async fetchSearchArticlesMetadata () {
+    async fetchSearchArticlesMetadata (pageNumber) {
       if (this.searchString === '') {
         return
       }
       Keyboard.hide()
-      this.loadedData = false
-      this.data = await Bridge.getSearchArticlesMetadata({ searchString: this.searchString })
-      this.loadedData = true
+
+      if (pageNumber === 1) {
+        this.loadedData = false
+        this.data = await Bridge.getSearchArticlesMetadata({ searchString: this.searchString + '&page=' + String(pageNumber) })
+        this.loadedData = true
+      } else {
+        this.loadingMore = true
+        const data = await Bridge.getSearchArticlesMetadata({ searchString: this.searchString + '&page=' + String(pageNumber) })
+        const tmp = {
+          articles: this.data.articles.concat(data.articles),
+          pagination: this.data.pagination
+        }
+        this.data = tmp
+        this.loadingMore = false
+      }
     },
     clearInput () {
       this.searchString = ''
