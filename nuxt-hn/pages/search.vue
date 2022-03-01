@@ -1,21 +1,25 @@
 <template>
   <main style="flex:2" class="overflow-y-auto">
     <div class="max-w-7xl mx-auto max-h-full flex flex-col justify-start items-center">
-      <div class="w-full flex border-b border-gray-300">
+      <div class="relative p-3 w-full flex border-gray-300">
         <input
           type="text"
           v-model="searchString"
           placeholder="Rechercher..."
           @keyup.enter="fetchSearchArticlesMetadata(1)"
-          class="w-full p-4"
+          class="pr-12 w-full p-2 border border-red-50 rounded-full"
         />
-        <btn-cancel v-if="searchString !== ''" />
+        <btn-cancel v-if="searchString !== ''" class="absolute top-5 right-6" />
       </div>
-      <div v-if="loadedData" class="w-full overflow-y-auto"><!-- WARNING: overflow doesn't work with flex ! And has need height fixed to his parent -->
+      <div v-if="loadedData" class="pt-2 w-full overflow-y-auto"><!-- WARNING: overflow doesn't work with flex ! And has need height fixed to his parent -->
         <search-card v-for="article in data.articles" :key="article.id" :article="article" />
-        <search-pagination v-if="(loadedData && data.hasOwnProperty('pagination')) || !loadingMore" :pagination="data.pagination" />
+        <search-pagination v-if="(loadedData && data.hasOwnProperty('pagination')) || loadingMore" :pagination="data.pagination" />
       </div>
-      <div v-if="!loadedData || loadingMore">
+      <div
+        v-if="!loadedData || loadingMore"
+        :class="loadingMore ? 'w-full flex justify-center items-center rounded-t-3xl justify-self-stretch':''"
+        :style="loadingMore ? 'box-shadow: rgba(100, 100, 111, 0.2) 0px -7px 29px 0px;':''"
+      >
         <svg-loader color="#b91c1c" />
       </div>
     </div>

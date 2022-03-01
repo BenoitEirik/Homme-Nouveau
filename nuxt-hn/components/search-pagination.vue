@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-16 flex justify-center items-center">
-    <div @click="goToNextPage(pageNumber + 1)" class="m-1 p-2 text-center text-sm text-gray-400 font-bold italic rounded-full border border-gray-400">
+    <div @click="goToNextPage(pageNumber + 1)" class="m-2 p-2 text-center text-sm text-red-700 rounded-full border border-red-700">
       Plus de résultats
     </div>
   </div>
