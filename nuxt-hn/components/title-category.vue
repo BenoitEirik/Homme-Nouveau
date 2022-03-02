@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-4 px-4 pb-2 w-full h-full flex justify-center text-xl font-bold text-red-700">
+  <div class="p-4 w-full h-full flex justify-center text-xl font-bold text-red-700">
     <p>◈&nbsp;</p>
     <p>{{ name }}</p>
     <p>&nbsp;◈</p>

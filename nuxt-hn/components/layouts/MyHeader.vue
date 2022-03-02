@@ -5,7 +5,7 @@
       <img src="@/assets/logo/logo-large.png" class="h-9" />
       <btn-search class="absolute right-0" />
     </div>
-    <div v-show="displaySearchBar" class="relative mx-auto p-3 max-w-7xl flex border-gray-300">
+    <div v-show="displaySearchBar" class="relative mx-auto p-3 max-w-7xl flex">
       <input
         ref="inputSearchBar"
         type="text"
@@ -17,21 +17,30 @@
       />
       <btn-cancel v-if="searchString !== ''" class="absolute top-5 right-6" />
     </div>
+    <div v-if="displayCategoryTitle" class="max-w-7xl">
+      <title-category :name="explorerState.categoryName" />
+    </div>
   </nav>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { Keyboard } from '@capacitor/keyboard'
 import { StatusBar, Style } from '@capacitor/status-bar'
+import TitleCategory from '~/components/title-category.vue'
 import BtnCancel from '~/components/buttons/btn-cancel.vue'
 
 export default {
-  components: { BtnCancel },
+  components: { BtnCancel, TitleCategory },
   data () {
     return {
       displaySearchBar: false,
+      displayCategoryTitle: false,
       searchString: ''
     }
+  },
+  computed: {
+    ...mapState(['explorerState'])
   },
   methods: {
     async setStatusBar () {
@@ -52,6 +61,9 @@ export default {
     this.setStatusBar()
     this.$nuxt.$on('search-bar', (display) => {
       this.displaySearchBar = display
+    })
+    this.$nuxt.$on('category-title', (display) => {
+      this.displayCategoryTitle = display
     })
   }
 }

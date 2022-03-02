@@ -1,7 +1,6 @@
 <template>
   <main style="flex:2" class="overflow-y-auto">
     <div class="max-w-7xl mx-auto min-h-full flex flex-col justify-center items-center">
-      <title-category :name="explorerState.categoryName" />
       <pagination v-if="data.hasOwnProperty('pagination')" :pagination="data.pagination" :pageNumber="explorerState.pageNumber" />
       <div v-if="loadedData" class="p-2 w-full h-full flex justify-center flex-wrap">
         <!-- Articles de la catégorie x à la page y -->
@@ -66,6 +65,10 @@ export default {
   },
   activated () {
     this.$nuxt.$emit('back-icon', true)
+    this.$nuxt.$emit('category-title', true)
+  },
+  deactivated () {
+    this.$nuxt.$emit('category-title', false)
   },
   beforeDestroy () {
     this.unwatch()
