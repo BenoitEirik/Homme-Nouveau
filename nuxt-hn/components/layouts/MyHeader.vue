@@ -12,8 +12,7 @@
         placeholder="Rechercher..."
         v-model="searchString"
         @keyup.enter="setSearchString()"
-        class="pl-4 pr-12 w-full p-2 rounded-full"
-        style="box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;"
+        class="pl-4 pr-12 w-full p-2 rounded-full border border-red-100 focus:border-red-700"
       />
       <btn-cancel v-if="searchString !== ''" class="absolute top-5 right-6" />
     </div>

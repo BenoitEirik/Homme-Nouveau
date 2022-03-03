@@ -2,8 +2,7 @@
   <div class="w-full h-16 flex justify-center items-center">
     <div
       @click="goToNextPage(pageNumber + 1)"
-      class="m-2 p-2 text-center text-sm text-gray-500 rounded-full"
-      style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;"
+      class="m-2 p-2 text-center text-sm text-gray-500 rounded-full border border-red-50 active:border-red-700"
     >
       Plus de résultats
     </div>

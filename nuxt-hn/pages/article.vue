@@ -82,7 +82,8 @@ export default {
   padding-bottom: 4px;
 }
 .espace-btn-el >>> .publication {
-  font-style: italic;
+  font-size: 14px;
+  color: rgb(96, 165, 250);
 }
 .espace-btn-el >>> img,  .espace-btn-el >>> iframe {
   margin-left: auto;
