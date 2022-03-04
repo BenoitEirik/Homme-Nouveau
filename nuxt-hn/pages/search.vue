@@ -39,10 +39,12 @@ export default {
       Keyboard.hide()
 
       if (pageNumber === 1) {
+        // First load
         this.loadedData = false
         this.data = await Bridge.getSearchArticlesMetadata({ searchString: this.searchString + '&page=' + String(pageNumber) })
         this.loadedData = true
       } else {
+        // Load more
         this.loadingMore = true
         const data = await Bridge.getSearchArticlesMetadata({ searchString: this.searchString + '&page=' + String(pageNumber) })
         const tmp = {

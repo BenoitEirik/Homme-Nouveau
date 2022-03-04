@@ -19,10 +19,11 @@ export default {
   },
 
   // backend
-  serverMiddleware: [
+  // Move backend in java (Capacitorjs can't execute node server)
+  /*serverMiddleware: [
     { path: '/api/home', handler: '@/api/home.js' },
     { path: '/api/article', handler: '@/api/article.js' }
-  ],
+  ],*/
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {

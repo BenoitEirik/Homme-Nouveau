@@ -16,6 +16,19 @@
       />
       <btn-cancel v-if="searchString !== ''" class="absolute top-5 right-6" />
     </div>
+    <div v-if="displayWordList" class="w-full max-w-7xl flex justify-start overflow-x-auto border-x-8 border-white">
+      <div
+        v-for="w in wordList.words"
+        :key="w.id"
+      >
+        <button
+          @click="searchString = w.word; setSearchString()"
+          class="my-2 mx-1 p-2 active:bg-red-50 border border-red-100 rounded-full text-xs text-gray-500 whitespace-nowrap"
+        >
+          #{{ w.word }}
+        </button>
+      </div>
+    </div>
     <div v-if="displayCategoryTitle" class="max-w-7xl">
       <title-category :name="explorerState.categoryName" />
     </div>
@@ -28,14 +41,17 @@ import { Keyboard } from '@capacitor/keyboard'
 import { StatusBar, Style } from '@capacitor/status-bar'
 import TitleCategory from '~/components/title-category.vue'
 import BtnCancel from '~/components/buttons/btn-cancel.vue'
+import Bridge from '~/plugins/capacitor'
 
 export default {
   components: { BtnCancel, TitleCategory },
   data () {
     return {
       displaySearchBar: false,
+      displayWordList: false,
       displayCategoryTitle: false,
-      searchString: ''
+      searchString: '',
+      wordList: Object
     }
   },
   computed: {
@@ -53,13 +69,20 @@ export default {
       this.$refs.inputSearchBar.focus()
       Keyboard.show()
       this.searchString = ''
-      this.setSearchString()
+    },
+    async fetchWordList () {
+      this.wordList = await Bridge.getWordList()
     }
   },
   created () {
     this.setStatusBar()
     this.$nuxt.$on('search-bar', (display) => {
+      if (display && this.wordList === Object) {
+        // Get word list
+        this.fetchWordList()
+      }
       this.displaySearchBar = display
+      this.displayWordList = display
     })
     this.$nuxt.$on('category-title', (display) => {
       this.displayCategoryTitle = display

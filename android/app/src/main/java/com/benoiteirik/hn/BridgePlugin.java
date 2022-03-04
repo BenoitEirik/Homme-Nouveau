@@ -29,6 +29,7 @@ public class BridgePlugin extends Plugin {
     private PluginCall articleDataCall;
     private PluginCall explorerMetadataCall;
     private PluginCall searchArticlesMetadata;
+    private PluginCall wordListCall;
 
 
     @PluginMethod()
@@ -65,6 +66,12 @@ public class BridgePlugin extends Plugin {
         searchArticlesMetadata = call;
         String searchString = searchArticlesMetadata.getString("searchString");
         AsyncTask<String, Void, Void> metadata = new SearchArticlesMetadata().execute(searchString);
+    }
+
+    @PluginMethod()
+    public void getWordList(PluginCall call) {
+        wordListCall = call;
+        AsyncTask<String, Void, Void> wordList = new WordListMetadata().execute();
     }
 
     private class HomeArticlesMetadata extends AsyncTask<String, Void, Void> {
@@ -223,7 +230,6 @@ public class BridgePlugin extends Plugin {
         }
     }
 
-
     private class SearchArticlesMetadata extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... params) {
@@ -256,7 +262,6 @@ public class BridgePlugin extends Plugin {
                 if (!pagination.isEmpty()) {
                     json.put("pagination", pagination.get(0).text());
                 }
-                Log.d("MSG:", json.toString(4));
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
@@ -268,4 +273,41 @@ public class BridgePlugin extends Plugin {
             searchArticlesMetadata.resolve(json);
         }
     }
+
+    private class WordListMetadata extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                Document doc = Jsoup.connect("https://www.hommenouveau.fr/recherche.htm").timeout(0).get();
+                json = new JSObject();  // Type of variable not declared here because need to transfer data to main thread
+                int index = 0;
+                JSONArray wordList = new JSONArray();
+
+                // Get next articles
+                Elements wordElements = doc.select("#nuage p a");
+                for (Element el : wordElements) {
+                    JSONObject word = new JSONObject();
+                    word.put("id", index);
+                    word.put("word", el.text());
+                    if (el.text() != "") {
+                        wordList.put(word);
+                        index++;
+                    }
+                }
+
+                // Join the json object
+                json.put("words", wordList);
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            wordListCall.resolve(json);
+        }
+    }
+
+
 }
