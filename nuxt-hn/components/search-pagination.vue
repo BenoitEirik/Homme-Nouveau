@@ -2,7 +2,7 @@
   <div class="w-full h-16 flex justify-center items-center">
     <div
       @click="goToNextPage(pageNumber + 1)"
-      class="m-2 p-2 text-center text-sm text-gray-500 rounded-full border border-red-50 active:border-red-700"
+      class="m-2 p-2 active:bg-red-50 border border-red-100 rounded-full text-xs text-gray-500 text-center"
     >
       Plus de résultats
     </div>

@@ -1,9 +1,9 @@
 <template>
   <main style="flex: 2" class="overflow-y-auto">
     <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8 min-h-full flex justify-start items-center">
-      <div v-if="loaded" class="p-4 w-full h-full rounded-2xl sm:shadow-md">
-        <div v-text="article.title" class="text-2xl font-bold text-red-700" />
-        <div id="dynamic-content" v-html="article.content" class="leading-relaxed text-base espace-btn-el" />
+      <div v-if="loaded" class="w-full h-full rounded-2xl sm:shadow-md border-8 border-white">
+        <div v-text="article.title" class="text-2xl font-bold text-red-700 border-8 border-white" />
+        <div id="dynamic-content" v-html="article.content" class="leading-relaxed text-base espace-btn-el border-8 overflow-hidden border-white" />
       </div>
       <svg-loader v-else color="#b91c1c" />
     </div>
