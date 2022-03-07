@@ -1,0 +1,17 @@
+{
+	"appId": "com.benoiteirik.hommenouveau",
+	"appName": "Homme Nouveau",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "www",
+	"plugins": {
+		"SplashScreen": {
+			"launchAutoHide": false,
+			"androidScaleType": "CENTER_CROP",
+			"backgroundColor": "#ffffff"
+		}
+	},
+	"server": {
+		"url": "http://192.168.149.4:9500"
+	}
+}
