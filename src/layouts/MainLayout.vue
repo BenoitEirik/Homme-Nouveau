@@ -33,12 +33,34 @@
       <div class="q-pa-lg logo">
         <q-img src="~assets/images/logo/small.svg" fit="contain" class="fit" />
       </div>
-      <h6 class="q-ma-none q-pb-md bg-primary text-secondary text-center">
-        L'Homme Nouveau
-      </h6>
+      <blockquote
+        class="q-ma-none q-pb-md bg-primary text-secondary text-center"
+        cite="http://jesusmarie.free.fr/bible_crampon_ephesiens.html"
+      >
+        « Revêtez-vous de L’Homme Nouveau, créé, selon Dieu, dans la justice et
+        la sainteté conformes à la vérité. » (Eph 4,24)
+      </blockquote>
+
+      <q-item clickable v-ripple @click="$router.push('/login')">
+        <q-item-section avatar>
+          <q-icon name="account_circle" color="primary" />
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label>Se connecter</q-item-label>
+          <q-item-label caption>
+            Pour accéder à tous les articles
+          </q-item-label>
+        </q-item-section>
+      </q-item>
 
       <q-list>
-        <q-item clickable target="_blank" href="https://hommenouveau.fr">
+        <q-item
+          clickable
+          v-ripple
+          target="_blank"
+          href="https://hommenouveau.fr"
+        >
           <q-item-section avatar>
             <q-icon name="web" color="primary" />
           </q-item-section>
@@ -49,21 +71,27 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable @click="$router.push('/login')">
+        <q-item
+          clickable
+          v-ripple
+          target="_blank"
+          href="https://hommenouveau.fr/faire-un-don/"
+        >
           <q-item-section avatar>
-            <q-icon name="account_circle" color="primary" />
+            <q-icon name="euro" color="primary" />
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>Se connecter</q-item-label>
+            <q-item-label>Faire un don</q-item-label>
             <q-item-label caption>
-              Pour accéder à tous les articles
+              Pour permettre à l’Homme Nouveau de rayonner !
             </q-item-label>
           </q-item-section>
         </q-item>
 
         <q-item
           clickable
+          v-ripple
           @click="
             async () => {
               await app.exitApp();
@@ -87,34 +115,24 @@
   </q-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
 import {
   StatusBar,
   Style,
 } from '../../src-capacitor/node_modules/@capacitor/status-bar';
-import { App } from '../../src-capacitor/node_modules/@capacitor/app';
+import { App as app } from '../../src-capacitor/node_modules/@capacitor/app';
 
-export default defineComponent({
-  name: 'MainLayout',
+const leftDrawerOpen = ref(false);
 
-  setup() {
-    const leftDrawerOpen = ref(false);
-
-    onMounted(async () => {
-      await StatusBar.setStyle({ style: Style.Light });
-      await StatusBar.setBackgroundColor({ color: '#ffffff' });
-    });
-
-    return {
-      app: App,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
-    };
-  },
+onMounted(async () => {
+  await StatusBar.setStyle({ style: Style.Light });
+  await StatusBar.setBackgroundColor({ color: '#ffffff' });
 });
+
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+}
 </script>
 
 <style scoped lang="scss">
