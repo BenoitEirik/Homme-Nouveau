@@ -1,5 +1,5 @@
 <template>
-  <q-page>Search</q-page>
+  <q-page class="column fit">Search</q-page>
 </template>
 
 <script setup lang="ts"></script>

@@ -1,7 +1,12 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header class="q-header">
-      <q-toolbar class="justify-between toolbar-bottom" style="height: 60px">
+      <q-toolbar
+        :class="`justify-between ${
+          $route.path !== '/search' ? 'toolbar-bottom' : ''
+        }`"
+        style="height: 60px"
+      >
         <q-btn
           color="primary"
           flat
@@ -27,6 +32,29 @@
           aria-label="Recherche"
           @click="$router.push('/search')"
         />
+      </q-toolbar>
+
+      <q-toolbar
+        v-if="$route.path === '/search'"
+        class="justify-between"
+        style="height: 60px"
+      >
+        <q-input
+          rounded
+          type="text"
+          v-model="searchStore().keywords"
+          label="Rechercher un article"
+          class="fit"
+        >
+          <template v-if="searchStore().keywords" v-slot:append>
+            <q-icon
+              name="cancel"
+              color="primary"
+              @click.stop.prevent="searchStore().keywords = ''"
+              class="cursor-pointer"
+            />
+          </template>
+        </q-input>
       </q-toolbar>
     </q-header>
 
@@ -123,6 +151,7 @@ import {
   Style,
 } from '../../src-capacitor/node_modules/@capacitor/status-bar';
 import { App as app } from '../../src-capacitor/node_modules/@capacitor/app';
+import { useSearchStore as searchStore } from '../stores/search-store';
 
 const leftDrawerOpen = ref(false);
 
