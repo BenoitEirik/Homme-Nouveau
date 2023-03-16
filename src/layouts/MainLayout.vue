@@ -25,6 +25,7 @@
           round
           icon="search"
           aria-label="Recherche"
+          @click="$router.push('/search')"
         />
       </q-toolbar>
     </q-header>
