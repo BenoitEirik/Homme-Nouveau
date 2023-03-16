@@ -1,6 +1,6 @@
 {
   "appId": "com.benoiteirik.hommenouveau",
-  "appName": "Homme Nouveau",
+  "appName": "L'Homme Nouveau",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
