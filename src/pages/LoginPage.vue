@@ -95,9 +95,18 @@ export default defineComponent({
 
     async function connection() {
       loading.value = true;
-      await loginStore.connection().catch((value: string) => {
-        error.value = value;
-      });
+      await loginStore
+        .connection()
+        .then(async () => {
+          await Storage.set({
+            key: 'connected',
+            value: JSON.stringify(true),
+          });
+          router.replace('/');
+        })
+        .catch((value: string) => {
+          error.value = value;
+        });
       loading.value = false;
     }
 

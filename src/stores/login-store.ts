@@ -30,8 +30,6 @@ export const useLoginStore = defineStore('login', {
         },
       });
 
-      console.log('test =', JSON.stringify(response))
-
       if (
         !response.headers['Set-Cookie'] &&
         !response.headers['Set-Cookie'].includes('wordpress_logged_in')
