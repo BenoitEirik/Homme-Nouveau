@@ -7,6 +7,7 @@ export default boot(async ({ router, urlPath }) => {
   const isConnected: boolean = JSON.parse((await Storage.get({ key: 'connected' })).value || 'false')
 
   router.beforeEach(async (to, from, next) => {
+    console.log('isConnected =', isConnected, 'to.path =', to.path)
     if (!isConnected && !to.path.includes('/login')) {
       next({ path: '/login' })
     } else

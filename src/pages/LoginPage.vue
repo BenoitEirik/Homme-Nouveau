@@ -5,9 +5,10 @@
 
       <p>
         Certains articles sont gratuits. Cependant, pour consulter l'ensemble
-        des articles, il est nécessaire de s'abonner à l'Homme Nouveau. Pour
-        soutenir le travail de l'Homme Nouveau, merci de vous abonner en
-        souscrivant à l'une des formules proposées sur le site.
+        des articles, il est nécessaire de soutenir le travail de l'Homme
+        Nouveau. Vous retrouverez les formules proposées sur leur site. Une fois
+        abonné, revenez sur l'application et connectez-vous ci-dessous avec vos
+        identifiants.
       </p>
 
       <template v-slot:action>
@@ -27,6 +28,7 @@
 
       <q-input
         outlined
+        square
         v-model="username"
         type="email"
         label="Identifiant ou adresse email"
@@ -35,6 +37,7 @@
 
       <q-input
         outlined
+        square
         v-model="password"
         type="password"
         label="Mot de passe"
