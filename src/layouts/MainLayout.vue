@@ -43,7 +43,7 @@
           rounded
           type="text"
           v-model="searchStore().keywords"
-          label="Rechercher un article"
+          label="Rechercher"
           class="fit"
         >
           <template v-if="searchStore().keywords" v-slot:append>
