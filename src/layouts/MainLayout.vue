@@ -41,9 +41,11 @@
       >
         <q-input
           rounded
+          outlined
+          dense
           type="text"
           v-model="searchStore().keywords"
-          label="Rechercher"
+          placeholder="Rechercher"
           class="fit"
         >
           <template v-if="searchStore().keywords" v-slot:append>

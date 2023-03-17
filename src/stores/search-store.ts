@@ -6,12 +6,16 @@ import { baseUrl } from 'src/assets/js/utils';
 export const useSearchStore = defineStore('searchStore', {
   state: () => ({
     keywords: '',
+    page: {
+      current: 0,
+      max: 0
+    },
     articles: [] as Article[],
   }),
   actions: {
     async getListArticles() {
       const response = await Http.get({
-        url: `${baseUrl}/category/a-la-une/`,
+        url: `${baseUrl}/?s=${this.keywords}`,
         headers: {
           'Content-Type': 'text/html; charset=UTF-8',
         },
@@ -27,35 +31,21 @@ export const useSearchStore = defineStore('searchStore', {
       ).body;
 
       const articleNodes = body
-        .querySelector('.el-dbe-blog-extra.grid_extended')
+        .querySelector('.paginated_page')
         ?.querySelectorAll('article');
 
       if (articleNodes) {
         articleNodes.forEach((article) => {
           const id = article.id.replace('post-', '');
-          const title =
-            article.querySelector('h3.entry-title a')?.textContent || '';
-          const description =
-            article.querySelector('div.post-data p')?.textContent || '';
-          const cover =
-            article
-              .querySelector('div.post-media img')
-              ?.getAttribute('srcset') || '';
-          const url =
-            article.querySelector('h3.entry-title a')?.getAttribute('href') ||
-            '';
-          const meta =
-            article.querySelector('.post-meta span')?.textContent || '';
-          const tags = Array.from(
-            article.querySelectorAll('.post-categories a')
-          )
-            .map((category: Element) => {
-              const label = (category as HTMLAnchorElement).textContent || '';
-              const url = (category as HTMLAnchorElement).href || '';
-              if (label === 'A la une') return { label: '', url: '' };
-              return { label, url };
-            })
-            .filter((category) => category.label !== '');
+          const title = article.querySelector('div.post-content h2.post-title a')?.textContent || '';
+          const description = article.querySelector('div.post-content div.excerpt p')?.textContent || '';
+          const cover = article.querySelector('div.header a picture source')?.getAttribute('srcset') || '';
+          const url = article.querySelector('div.post-content h2.post-title a ')?.getAttribute('href') || '';
+          const meta = article.querySelector('.post-meta span')?.textContent || '';
+          const tags = [] as {
+            label: string;
+            url: string;
+          }[]
 
           this.articles.push({
             id,

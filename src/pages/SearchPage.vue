@@ -2,7 +2,7 @@
   <q-page class="column fit">
     <q-infinite-scroll @load="onLoad" :offset="250">
       <ArticleSmallCard
-        :data="articleStore().articles[0]"
+        :data="article"
         v-for="(article, index) in articles"
         :key="index"
         class="caption"
@@ -18,16 +18,16 @@
 </template>
 
 <script setup lang="ts">
+import { Article } from 'src/assets/js/articles';
 import ArticleSmallCard from 'src/components/ArticleSmallCard.vue';
-import { useArticlesStore as articleStore } from 'src/stores/articles-store';
+import { useSearchStore as searchStore } from 'src/stores/search-store';
 import { ref } from 'vue';
 
-const articles = ref([{}, {}, {}, {}, {}, {}, {}]);
+const articles = ref([] as Article[]);
 
-function onLoad(index: number, done: any) {
-  setTimeout(() => {
-    articles.value.splice(0, 0, {}, {}, {}, {}, {}, {}, {});
-    done();
-  }, 2000);
+async function onLoad(index: number, done: any) {
+  await searchStore().getListArticles();
+  articles.value.push(...searchStore().articles);
+  done();
 }
 </script>
