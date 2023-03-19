@@ -10,6 +10,7 @@ export interface Article {
     url: string;
   }[];
   content?: ArticleContent | undefined;
+  subscriberOnly?: boolean | undefined;
 }
 
 export interface ArticleContent {
