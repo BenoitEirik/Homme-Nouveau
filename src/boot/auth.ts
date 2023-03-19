@@ -3,7 +3,7 @@ import { Storage } from '../../src-capacitor/node_modules/@capacitor/storage';
 
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
-export default boot(async ({ router, urlPath }) => {
+export default boot(async ({ router }) => {
   const isConnected: boolean = JSON.parse((await Storage.get({ key: 'connected' })).value || 'false')
 
   router.beforeEach(async (to, from, next) => {
