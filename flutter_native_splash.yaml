@@ -1,0 +1,25 @@
+flutter_native_splash:
+  # Couleur de fond de l'écran de démarrage
+  color: "#FFFFFF"
+  
+  # Vous pouvez également utiliser une image de fond au lieu d'une couleur
+  # background_image: "assets/background.png"
+  
+  # Chemin vers l'image du logo qui sera affichée au centre
+  image: "assets/images/logo_splash.png"
+  
+  # La propriété android_gravity contrôle la position de l'image sur Android
+  android_gravity: center
+  
+  # Couleur de la barre d'état (Android 12+ uniquement)
+  android_12:
+    # La couleur de fond de l'écran de démarrage pour Android 12+
+    color: "#FFFFFF"
+    # L'image qui sera affichée au centre
+    image: "assets/images/logo_splash.png"
+    # La couleur de fond de l'icône
+    icon_background_color: "#FFFFFF"
+  
+  # Paramètres pour le mode sombre (optionnel)
+  # color_dark: "#121212"
+  # image_dark: "assets/images/logo_splash.png"
